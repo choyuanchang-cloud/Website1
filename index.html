@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>硬幣價格練習</title>
+    <meta name="theme-color" content="#0c7c72" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="硬幣練習" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Money Practice</p>
+          <h1>硬幣價格練習</h1>
+        </div>
+        <div class="scoreboard" aria-label="遊戲分數與答題統計">
+          <div>
+            <span class="score-label">分數</span>
+            <strong id="score">0</strong>
+          </div>
+          <div>
+            <span class="score-label">連續</span>
+            <strong id="streak">0</strong>
+          </div>
+          <div class="stat-correct">
+            <span class="score-label">答對</span>
+            <strong id="correctCount">0</strong>
+          </div>
+          <div class="stat-wrong">
+            <span class="score-label">答錯</span>
+            <strong id="wrongCount">0</strong>
+          </div>
+          <button id="soundToggle" class="icon-button" type="button" aria-pressed="false" aria-label="音效開關" title="音效開關">
+            <span id="soundIcon" aria-hidden="true">♪</span>
+          </button>
+        </div>
+      </header>
+
+      <main class="game-board" aria-live="polite">
+        <section class="control-strip" aria-label="遊戲模式">
+          <div class="mode-tabs" role="tablist" aria-label="選擇練習模式">
+            <button id="payMode" class="mode-tab is-active" type="button" role="tab" aria-selected="true">
+              看價格付錢
+            </button>
+            <button id="countMode" class="mode-tab" type="button" role="tab" aria-selected="false">
+              數硬幣總價
+            </button>
+          </div>
+          <div class="range-tabs" role="group" aria-label="選擇金額區段">
+            <button class="range-tab is-active" type="button" data-range="under100">100以內</button>
+            <button class="range-tab" type="button" data-range="under200">200以內</button>
+            <button class="range-tab" type="button" data-range="under500">500以內</button>
+          </div>
+          <button id="newRoundButton" class="text-button" type="button">新題目</button>
+        </section>
+
+        <section class="play-area">
+          <div class="challenge-panel">
+            <div class="round-chip">第 <span id="roundNumber">1</span> 題</div>
+            <div id="payChallenge" class="challenge-view">
+              <p class="task-label">目標金額</p>
+              <div class="price-card">
+                <span class="currency">$</span>
+                <strong id="targetAmount">0</strong>
+              </div>
+            </div>
+            <div id="countChallenge" class="challenge-view is-hidden">
+              <p class="task-label">硬幣總價</p>
+              <div id="questionCoins" class="question-coins" aria-label="題目硬幣"></div>
+            </div>
+          </div>
+
+          <div class="workspace">
+            <div id="dropZone" class="drop-zone" aria-label="付款盤">
+              <div class="drop-zone-head">
+                <span id="dropZoneTitle">付款盤</span>
+                <strong id="currentTotal">$0</strong>
+              </div>
+              <div id="placedCoins" class="placed-coins"></div>
+              <div id="emptyHint" class="empty-hint">拖進來或點硬幣</div>
+            </div>
+
+            <div id="answerPanel" class="answer-panel is-hidden" aria-label="輸入答案">
+              <div class="answer-display">
+                <span>你的答案</span>
+                <strong><span id="answerValue">0</span></strong>
+              </div>
+              <div class="number-pad">
+                <button type="button" data-number="1">1</button>
+                <button type="button" data-number="2">2</button>
+                <button type="button" data-number="3">3</button>
+                <button type="button" data-number="4">4</button>
+                <button type="button" data-number="5">5</button>
+                <button type="button" data-number="6">6</button>
+                <button type="button" data-number="7">7</button>
+                <button type="button" data-number="8">8</button>
+                <button type="button" data-number="9">9</button>
+                <button type="button" data-action="backspace">⌫</button>
+                <button type="button" data-number="0">0</button>
+                <button type="button" data-action="clear">C</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="coin-bank" aria-label="可使用硬幣">
+          <div class="coin-bank-options">
+            <span class="coin-bank-label">放入方式</span>
+            <div class="tap-tabs" role="group" aria-label="選擇硬幣放入方式">
+              <button class="tap-mode-button is-active" type="button" data-tap-mode="double">連點兩次</button>
+              <button class="tap-mode-button" type="button" data-tap-mode="single">點一下</button>
+            </div>
+          </div>
+          <div class="coin-row">
+            <button class="coin coin-50" type="button" data-coin="50" aria-label="50元硬幣">
+              <span>50</span>
+            </button>
+            <button class="coin coin-10" type="button" data-coin="10" aria-label="10元硬幣">
+              <span>10</span>
+            </button>
+            <button class="coin coin-5" type="button" data-coin="5" aria-label="5元硬幣">
+              <span>5</span>
+            </button>
+            <button class="coin coin-1" type="button" data-coin="1" aria-label="1元硬幣">
+              <span>1</span>
+            </button>
+          </div>
+        </section>
+
+        <section class="action-row" aria-label="作答操作">
+          <button id="undoButton" class="tool-button" type="button">回上一枚</button>
+          <button id="clearButton" class="tool-button" type="button">清空</button>
+          <button id="checkButton" class="primary-button" type="button">送出答案</button>
+        </section>
+
+        <div id="feedback" class="feedback" role="status">準備開始</div>
+      </main>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -200,6 +200,7 @@ function renderQuestionCoins() {
 
 function setMode(mode) {
   state.mode = mode;
+  document.body.dataset.mode = mode;
   state.placed = [];
   state.answer = "";
 

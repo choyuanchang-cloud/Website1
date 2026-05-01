@@ -713,12 +713,59 @@ h1 {
     min-height: clamp(150px, 24vh, 230px);
   }
 
+  body[data-mode="pay"] .challenge-panel {
+    position: sticky;
+    top: max(6px, env(safe-area-inset-top));
+    z-index: 20;
+    min-height: clamp(104px, 18vh, 150px);
+    padding: 10px 14px;
+    align-content: center;
+    box-shadow: 0 12px 28px rgba(23, 34, 29, 0.14);
+  }
+
+  body[data-mode="pay"] .task-label {
+    margin-bottom: 4px;
+  }
+
+  body[data-mode="pay"] .price-card {
+    justify-content: center;
+  }
+
+  body[data-mode="pay"] .price-card .currency {
+    font-size: clamp(1.7rem, 8vw, 2.5rem);
+  }
+
+  body[data-mode="pay"] .price-card strong {
+    font-size: clamp(3.6rem, 18vw, 5.4rem);
+    line-height: 0.9;
+  }
+
+  body[data-mode="pay"] .round-chip {
+    top: 8px;
+    right: 8px;
+    padding: 5px 8px;
+    font-size: 0.76rem;
+  }
+
   .price-card strong {
     font-size: clamp(4.2rem, 24vw, 7.4rem);
   }
 
   .workspace {
     min-height: clamp(230px, 34vh, 330px);
+  }
+
+  body[data-mode="pay"] .workspace {
+    min-height: clamp(150px, 24vh, 240px);
+  }
+
+  body[data-mode="pay"] .placed-coins {
+    min-height: 0;
+    padding: 4px;
+  }
+
+  body[data-mode="pay"] .empty-hint {
+    inset: 50px 10px 10px;
   }
 
   .question-coins {

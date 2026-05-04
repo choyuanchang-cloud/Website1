@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>硬幣價格練習 - 說明</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f4f7f2;
+        --ink: #17221d;
+        --muted: #596861;
+        --accent: #0c7c72;
+        --line: #cdd8ce;
+        font-family: "Segoe UI", "Noto Sans TC", system-ui, sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        line-height: 1.7;
+      }
+
+      main {
+        width: min(900px, 100%);
+        margin: 0 auto;
+        padding: 24px clamp(16px, 4vw, 36px) 48px;
+      }
+
+      h1 {
+        margin: 0 0 16px;
+        color: var(--accent);
+        font-size: clamp(2rem, 6vw, 3rem);
+        line-height: 1.1;
+      }
+
+      h2 {
+        margin: 30px 0 10px;
+        padding-top: 12px;
+        border-top: 1px solid var(--line);
+        color: var(--accent);
+        font-size: 1.35rem;
+      }
+
+      h3 {
+        margin: 20px 0 8px;
+        font-size: 1.08rem;
+      }
+
+      p {
+        margin: 0 0 12px;
+      }
+
+      ul,
+      ol {
+        margin: 8px 0 14px;
+        padding-left: 1.5rem;
+      }
+
+      code,
+      pre {
+        font-family: Consolas, "Courier New", monospace;
+      }
+
+      pre {
+        overflow: auto;
+        padding: 12px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+      }
+
+      .lead {
+        color: var(--muted);
+        font-size: 1.08rem;
+        font-weight: 700;
+      }
+
+      .close-row {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        margin: -24px calc(clamp(16px, 4vw, 36px) * -1) 18px;
+        padding: 12px clamp(16px, 4vw, 36px);
+        display: flex;
+        justify-content: flex-end;
+        background: rgba(244, 247, 242, 0.94);
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid rgba(205, 216, 206, 0.7);
+      }
+
+      button {
+        min-height: 40px;
+        padding: 0 16px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+        color: var(--accent);
+        cursor: pointer;
+        font: inherit;
+        font-weight: 900;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="close-row">
+        <button type="button" onclick="window.close()">關閉說明</button>
+      </div>
+
+      <h1>硬幣價格練習</h1>
+      <p class="lead">給孩子練習台幣硬幣計算的網頁遊戲，支援手機、平板與電腦操作。</p>
+
+      <h2>功能特色</h2>
+      <ul>
+        <li>兩種練習模式：看價格付錢、數硬幣總價。</li>
+        <li>三種金額範圍：100 以內、200 以內、500 以內。</li>
+        <li>硬幣面額包含 50、10、5、1 元。</li>
+        <li>50 元為黃銅色最大，10 元與 5 元為銀色，1 元為古銅色最小。</li>
+        <li>可點一下硬幣放入付款盤，也可以拖曳硬幣到付款盤。</li>
+        <li>放錯硬幣時，可點一下付款盤中的硬幣移除，或拖出付款盤。</li>
+        <li>答對、答錯會播放不同音效。</li>
+        <li>顯示連續答對、答對總數、答錯總數。</li>
+        <li>可重新計分。</li>
+        <li>支援 PWA，可加入 iPad 或手機主畫面使用。</li>
+      </ul>
+
+      <h2>金額範圍</h2>
+      <ul>
+        <li>100 以內：1 到 99。</li>
+        <li>200 以內：100 到 199。</li>
+        <li>500 以內：1 到 499。</li>
+      </ul>
+
+      <h2>使用方式</h2>
+      <p>直接用瀏覽器開啟 <code>index.html</code>，或部署到 GitHub Pages、Netlify、Cloudflare Pages 等靜態網站服務。</p>
+
+      <h2>部署到 GitHub Pages</h2>
+      <ol>
+        <li>建立一個新的 GitHub Repository。</li>
+        <li>將本專案所有檔案上傳到 repository 根目錄。</li>
+        <li>到 repository 的 <code>Settings</code>。</li>
+        <li>選擇 <code>Pages</code>。</li>
+        <li>在 <code>Build and deployment</code> 中選擇 <code>Deploy from a branch</code>。</li>
+        <li>Branch 選擇 <code>main</code>，Folder 選擇 <code>/root</code>。</li>
+        <li>儲存設定，等待 GitHub Pages 完成部署。</li>
+      </ol>
+
+      <h2>在 iPad 或手機加入主畫面</h2>
+      <h3>iPad / iPhone</h3>
+      <ol>
+        <li>用 Safari 開啟遊戲網址。</li>
+        <li>按分享按鈕。</li>
+        <li>選擇「加入主畫面」。</li>
+        <li>名稱可設定為「硬幣練習」。</li>
+      </ol>
+
+      <h3>Android</h3>
+      <ol>
+        <li>用 Chrome 開啟遊戲網址。</li>
+        <li>按右上角選單。</li>
+        <li>選擇「加入主畫面」或「安裝應用程式」。</li>
+      </ol>
+
+      <h2>離線使用</h2>
+      <p>本專案包含 <code>service-worker.js</code>。部署到 HTTPS 網站後，瀏覽器會快取遊戲檔案。第一次開啟需要網路，之後通常可以離線使用。</p>
+
+      <h2>技術說明</h2>
+      <ul>
+        <li>純 HTML、CSS、JavaScript。</li>
+        <li>不需要後端伺服器或資料庫。</li>
+        <li>支援 Pointer Events，滑鼠、觸控、平板都可使用。</li>
+        <li>已設定 PWA manifest 與 service worker。</li>
+      </ul>
+    </main>
+  </body>
+</html>

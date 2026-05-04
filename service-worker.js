@@ -1,7 +1,8 @@
-const CACHE_NAME = "coin-price-practice-v18";
+const CACHE_NAME = "coin-price-practice-v19";
 const ASSETS = [
   "./",
   "./index.html",
+  "./readme.html",
   "./styles.css",
   "./script.js",
   "./manifest.webmanifest",

@@ -30,6 +30,7 @@ const dom = {
   newRoundButton: document.querySelector("#newRoundButton"),
   soundToggle: document.querySelector("#soundToggle"),
   soundIcon: document.querySelector("#soundIcon"),
+  helpButton: document.querySelector("#helpButton"),
   resetScoreButton: document.querySelector("#resetScoreButton"),
   numberPad: document.querySelector(".number-pad"),
   coinBank: document.querySelector(".coin-bank"),
@@ -465,6 +466,9 @@ dom.soundToggle.addEventListener("click", () => {
 });
 dom.resetScoreButton.addEventListener("click", () => {
   window.location.reload();
+});
+dom.helpButton.addEventListener("click", () => {
+  window.open("readme.html", "_blank", "noopener");
 });
 dom.numberPad.addEventListener("click", handleNumberPad);
 

@@ -1,7 +1,5 @@
 const denominations = [50, 10, 5, 1];
-const tapModes = ["double", "single"];
 const TAP_DISTANCE = 12;
-const DOUBLE_TAP_MS = 430;
 const priceRanges = {
   under100: { min: 1, max: 99 },
   under200: { min: 100, max: 199 },
@@ -30,23 +28,19 @@ const dom = {
   answerValue: document.querySelector("#answerValue"),
   checkButton: document.querySelector("#checkButton"),
   clearButton: document.querySelector("#clearButton"),
-  undoButton: document.querySelector("#undoButton"),
   newRoundButton: document.querySelector("#newRoundButton"),
   soundToggle: document.querySelector("#soundToggle"),
   soundIcon: document.querySelector("#soundIcon"),
   numberPad: document.querySelector(".number-pad"),
   coinBank: document.querySelector(".coin-bank"),
   rangeButtons: document.querySelectorAll("[data-range]"),
-  tapModeButtons: document.querySelectorAll("[data-tap-mode]"),
 };
 
 const savedRange = localStorage.getItem("coinGameRange");
-const savedTapMode = localStorage.getItem("coinGameTapMode");
 
 const state = {
   mode: "pay",
   range: priceRanges[savedRange] ? savedRange : "under100",
-  tapMode: tapModes.includes(savedTapMode) ? savedTapMode : "double",
   score: 0,
   streak: 0,
   correctCount: 0,
@@ -61,7 +55,6 @@ const state = {
 
 let audioContext;
 let dragState = null;
-let lastCoinTap = { action: null, value: null, index: null, time: 0 };
 
 function randomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -113,20 +106,8 @@ function updateRangeButtons() {
   });
 }
 
-function updateTapModeButtons() {
-  dom.tapModeButtons.forEach((button) => {
-    const isActive = button.dataset.tapMode === state.tapMode;
-    button.classList.toggle("is-active", isActive);
-    button.setAttribute("aria-pressed", String(isActive));
-  });
-}
-
 function currentPlacedTotal() {
   return state.placed.reduce((sum, value) => sum + value, 0);
-}
-
-function resetCoinTap() {
-  lastCoinTap = { action: null, value: null, index: null, time: 0 };
 }
 
 function addCoinToPayment(value) {
@@ -152,7 +133,7 @@ function updatePaymentView() {
   state.placed.forEach((value, index) => {
     const coin = makeCoin(value);
     coin.dataset.index = String(index);
-    coin.title = state.tapMode === "single" ? "拖出付款盤或點一下移除" : "拖出付款盤或連點兩次移除";
+    coin.title = "拖出付款盤或點一下移除";
     dom.placedCoins.appendChild(coin);
   });
 
@@ -214,7 +195,6 @@ function setMode(mode) {
   dom.dropZone.classList.toggle("is-hidden", !isPay);
   dom.answerPanel.classList.toggle("is-hidden", isPay);
   dom.coinBank.classList.toggle("is-hidden", !isPay);
-  dom.undoButton.classList.toggle("is-hidden", !isPay);
   dom.clearButton.classList.toggle("is-hidden", false);
   dom.dropZoneTitle.textContent = "付款盤";
 
@@ -230,17 +210,6 @@ function setRange(range) {
   newRound(false);
 }
 
-function setTapMode(tapMode) {
-  if (!tapModes.includes(tapMode) || state.tapMode === tapMode) return;
-
-  state.tapMode = tapMode;
-  localStorage.setItem("coinGameTapMode", tapMode);
-  resetCoinTap();
-  updateTapModeButtons();
-  updatePaymentView();
-  setFeedback(tapMode === "single" ? "點一下硬幣就會放入" : "連點兩次硬幣就會放入");
-}
-
 function newRound(advance = true) {
   if (advance) {
     state.round += 1;
@@ -248,12 +217,11 @@ function newRound(advance = true) {
 
   state.placed = [];
   state.answer = "";
-  resetCoinTap();
 
   if (state.mode === "pay") {
     state.target = generateTargetAmount();
     dom.targetAmount.textContent = String(state.target);
-    setFeedback("拖曳或點硬幣，付出剛好的金額；放錯可拖出付款盤");
+    setFeedback("點一下硬幣或拖進付款盤；放錯可點一下或拖出");
   } else {
     state.question = generateCoinQuestion();
     state.target = state.question.reduce((sum, value) => sum + value, 0);
@@ -310,8 +278,6 @@ function checkAnswer() {
 }
 
 function clearCurrentInput() {
-  resetCoinTap();
-
   if (state.mode === "pay") {
     state.placed = [];
     updatePaymentView();
@@ -390,29 +356,6 @@ function runCoinTapAction(action, value, index = null) {
   removeCoinFromPayment(index);
 }
 
-function handleCoinTap(action, value, index = null) {
-  if (state.tapMode === "single") {
-    runCoinTapAction(action, value, index);
-    return;
-  }
-
-  const now = Date.now();
-  const isSameTap =
-    lastCoinTap.action === action &&
-    lastCoinTap.value === value &&
-    (action === "add" || lastCoinTap.index === index);
-  const isSecondTap = isSameTap && now - lastCoinTap.time <= DOUBLE_TAP_MS;
-
-  if (isSecondTap) {
-    runCoinTapAction(action, value, index);
-    resetCoinTap();
-    return;
-  }
-
-  lastCoinTap = { action, value, index, time: now };
-  setFeedback(action === "add" ? `再點一次 ${value} 元硬幣就會放入` : `再點一次 ${value} 元硬幣就會拿掉`);
-}
-
 function startPaymentCoinDrag(event, coin, source) {
   if (state.mode !== "pay") return;
 
@@ -469,16 +412,12 @@ function endCoinDrag(event) {
 
   if (dragState.source === "bank" && didDrop) {
     addCoinToPayment(dragState.value);
-    resetCoinTap();
   } else if (dragState.source === "bank" && movedDistance <= TAP_DISTANCE) {
-    handleCoinTap("add", dragState.value);
+    runCoinTapAction("add", dragState.value);
   } else if (dragState.source === "placed" && !didDrop && movedDistance > TAP_DISTANCE) {
     removeCoinFromPayment(dragState.index);
-    resetCoinTap();
   } else if (dragState.source === "placed" && movedDistance <= TAP_DISTANCE) {
-    handleCoinTap("remove", dragState.value, dragState.index);
-  } else {
-    resetCoinTap();
+    runCoinTapAction("remove", dragState.value, dragState.index);
   }
 
   dragState.ghost.remove();
@@ -519,17 +458,9 @@ dom.countMode.addEventListener("click", () => setMode("count"));
 dom.rangeButtons.forEach((button) => {
   button.addEventListener("click", () => setRange(button.dataset.range));
 });
-dom.tapModeButtons.forEach((button) => {
-  button.addEventListener("click", () => setTapMode(button.dataset.tapMode));
-});
 dom.checkButton.addEventListener("click", checkAnswer);
 dom.newRoundButton.addEventListener("click", () => newRound(true));
 dom.clearButton.addEventListener("click", clearCurrentInput);
-dom.undoButton.addEventListener("click", () => {
-  resetCoinTap();
-  state.placed.pop();
-  updatePaymentView();
-});
 dom.soundToggle.addEventListener("click", () => {
   state.muted = !state.muted;
   localStorage.setItem("coinGameMuted", String(state.muted));
@@ -539,7 +470,6 @@ dom.numberPad.addEventListener("click", handleNumberPad);
 
 updateSoundButton();
 updateRangeButtons();
-updateTapModeButtons();
 setMode("pay");
 
 if ("serviceWorker" in navigator) {

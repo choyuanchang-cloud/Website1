@@ -168,8 +168,7 @@ h1 {
 }
 
 .mode-tabs,
-.range-tabs,
-.tap-tabs {
+.range-tabs {
   display: grid;
   gap: 4px;
   padding: 4px;
@@ -188,14 +187,8 @@ h1 {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-.tap-tabs {
-  width: 100%;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
 .mode-tab,
 .range-tab,
-.tap-mode-button,
 .text-button,
 .tool-button,
 .primary-button {
@@ -206,13 +199,8 @@ h1 {
   transition: transform 140ms ease, background 140ms ease, color 140ms ease, box-shadow 140ms ease;
 }
 
-.tap-mode-button {
-  min-height: clamp(42px, 6.5vh, 52px);
-}
-
 .mode-tab,
-.range-tab,
-.tap-mode-button {
+.range-tab {
   padding: 0 14px;
   background: transparent;
   color: var(--muted);
@@ -220,8 +208,7 @@ h1 {
 }
 
 .mode-tab.is-active,
-.range-tab.is-active,
-.tap-mode-button.is-active {
+.range-tab.is-active {
   background: var(--accent);
   color: #fff;
   box-shadow: 0 8px 16px rgba(12, 124, 114, 0.24);
@@ -247,7 +234,6 @@ h1 {
 @media (hover: hover) {
   .mode-tab:hover,
   .range-tab:hover,
-  .tap-mode-button:hover,
   .text-button:hover,
   .tool-button:hover,
   .primary-button:hover,
@@ -473,37 +459,18 @@ h1 {
 
 .coin-bank {
   flex: 0 0 auto;
-  min-height: clamp(132px, 18vh, 198px);
+  min-height: clamp(104px, 15vh, 164px);
   display: flex;
-  flex-direction: row;
   align-items: center;
-  justify-content: space-between;
-  gap: clamp(16px, 3vw, 32px);
-  padding: 16px clamp(18px, 3vw, 30px);
+  justify-content: center;
+  padding: 12px clamp(14px, 2.6vw, 24px);
   border-radius: 8px;
   background: #e9efe9;
   border: 1px solid var(--line);
 }
 
-.coin-bank-options {
-  width: clamp(178px, 22vw, 248px);
-  flex: 0 0 clamp(178px, 22vw, 248px);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-
-.coin-bank-label {
-  color: var(--muted);
-  font-size: 1rem;
-  font-weight: 900;
-  white-space: nowrap;
-}
-
 .coin-row {
-  flex: 1;
+  width: 100%;
   min-width: 0;
   display: flex;
   align-items: center;
@@ -641,7 +608,7 @@ h1 {
 .action-row {
   flex: 0 0 auto;
   display: grid;
-  grid-template-columns: repeat(2, minmax(96px, 140px)) minmax(150px, 1fr);
+  grid-template-columns: minmax(96px, 0.75fr) minmax(150px, 1.25fr);
   gap: 10px;
 }
 
@@ -827,16 +794,8 @@ h1 {
   }
 
   body[data-mode="pay"] .coin-bank {
-    min-height: clamp(110px, 16vh, 136px);
+    min-height: clamp(96px, 14vh, 124px);
     padding: 8px;
-  }
-
-  body[data-mode="pay"] .coin-bank-options {
-    gap: 5px;
-  }
-
-  body[data-mode="pay"] .tap-mode-button {
-    min-height: 34px;
   }
 
   .coin-row {
@@ -845,15 +804,15 @@ h1 {
   }
 
   .action-row {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: minmax(92px, 0.8fr) minmax(142px, 1.2fr);
   }
 
   .primary-button {
-    grid-column: 1 / -1;
+    grid-column: auto;
   }
 
   body[data-mode="pay"] .action-row {
-    grid-template-columns: minmax(88px, 1fr) minmax(80px, 1fr) minmax(126px, 1.35fr);
+    grid-template-columns: minmax(92px, 0.8fr) minmax(142px, 1.2fr);
   }
 
   body[data-mode="pay"] .primary-button {
@@ -870,13 +829,7 @@ h1 {
 
 @media (max-width: 600px) {
   .coin-bank {
-    min-height: clamp(158px, 26vh, 206px);
-    flex-direction: column;
-  }
-
-  .coin-bank-options {
-    width: 100%;
-    flex: 0 0 auto;
+    min-height: clamp(96px, 15vh, 130px);
   }
 
   .coin-row {
@@ -886,14 +839,13 @@ h1 {
 
 @media (max-width: 420px) {
   .mode-tab,
-  .range-tab,
-  .tap-mode-button {
+  .range-tab {
     padding: 0 8px;
     font-size: 0.92rem;
   }
 
   .coin-bank {
-    min-height: clamp(150px, 24vh, 188px);
+    min-height: clamp(92px, 14vh, 122px);
   }
 
   .question-coins .coin-50 {
@@ -971,14 +923,6 @@ h1 {
     padding: 8px clamp(10px, 2vw, 18px);
   }
 
-  .coin-bank-label {
-    font-size: 0.9rem;
-  }
-
-  .tap-mode-button {
-    min-height: 40px;
-  }
-
   .coin-50 {
     --coin-size: clamp(82px, 8.5vw, 106px);
   }
@@ -1035,7 +979,7 @@ h1 {
 
 @media (max-width: 600px) and (max-height: 760px) {
   .coin-bank {
-    min-height: clamp(150px, 25vh, 180px);
+    min-height: clamp(88px, 14vh, 116px);
   }
 
   .coin-50 {

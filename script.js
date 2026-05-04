@@ -7,7 +7,6 @@ const priceRanges = {
 };
 
 const dom = {
-  score: document.querySelector("#score"),
   streak: document.querySelector("#streak"),
   correctCount: document.querySelector("#correctCount"),
   wrongCount: document.querySelector("#wrongCount"),
@@ -31,6 +30,7 @@ const dom = {
   newRoundButton: document.querySelector("#newRoundButton"),
   soundToggle: document.querySelector("#soundToggle"),
   soundIcon: document.querySelector("#soundIcon"),
+  resetScoreButton: document.querySelector("#resetScoreButton"),
   numberPad: document.querySelector(".number-pad"),
   coinBank: document.querySelector(".coin-bank"),
   rangeButtons: document.querySelectorAll("[data-range]"),
@@ -41,7 +41,6 @@ const savedRange = localStorage.getItem("coinGameRange");
 const state = {
   mode: "pay",
   range: priceRanges[savedRange] ? savedRange : "under100",
-  score: 0,
   streak: 0,
   correctCount: 0,
   wrongCount: 0,
@@ -85,7 +84,6 @@ function setFeedback(message, status = "") {
 }
 
 function updateScoreboard() {
-  dom.score.textContent = String(state.score);
   dom.streak.textContent = String(state.streak);
   dom.correctCount.textContent = String(state.correctCount);
   dom.wrongCount.textContent = String(state.wrongCount);
@@ -237,7 +235,6 @@ function newRound(advance = true) {
 function awardCorrect() {
   state.streak += 1;
   state.correctCount += 1;
-  state.score += 10 + Math.min(10, state.streak * 2);
   updateScoreboard();
   playMelody("correct");
   setFeedback(`答對了，得到 ${state.target} 元`, "correct");
@@ -465,6 +462,9 @@ dom.soundToggle.addEventListener("click", () => {
   state.muted = !state.muted;
   localStorage.setItem("coinGameMuted", String(state.muted));
   updateSoundButton();
+});
+dom.resetScoreButton.addEventListener("click", () => {
+  window.location.reload();
 });
 dom.numberPad.addEventListener("click", handleNumberPad);
 

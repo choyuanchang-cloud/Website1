@@ -99,7 +99,8 @@ h1 {
 }
 
 .scoreboard > div,
-.icon-button {
+.icon-button,
+.reset-button {
   min-width: 70px;
   min-height: clamp(48px, 7vh, 58px);
   border: 1px solid rgba(23, 34, 29, 0.08);
@@ -143,6 +144,15 @@ h1 {
 
 .icon-button.is-muted {
   color: var(--muted);
+}
+
+.reset-button {
+  min-width: 92px;
+  padding: 0 12px;
+  cursor: pointer;
+  color: var(--accent-strong);
+  font-weight: 900;
+  white-space: nowrap;
 }
 
 .game-board {
@@ -662,7 +672,7 @@ h1 {
   .scoreboard {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr)) 58px;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) 50px minmax(82px, 0.9fr);
     gap: 6px;
   }
 
@@ -672,8 +682,20 @@ h1 {
     padding: 4px 6px;
   }
 
-  .icon-button {
+  .icon-button,
+  .reset-button {
     min-height: 42px;
+  }
+
+  .icon-button {
+    width: 50px;
+    min-width: 50px;
+  }
+
+  .reset-button {
+    min-width: 0;
+    padding: 0 8px;
+    font-size: 0.82rem;
   }
 
   .score-label {
@@ -898,7 +920,8 @@ h1 {
   }
 
   .scoreboard > div,
-  .icon-button {
+  .icon-button,
+  .reset-button {
     min-height: 44px;
   }
 

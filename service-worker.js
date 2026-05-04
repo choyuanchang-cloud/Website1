@@ -1,4 +1,4 @@
-const CACHE_NAME = "coin-price-practice-v16";
+const CACHE_NAME = "coin-price-practice-v18";
 const ASSETS = [
   "./",
   "./index.html",
